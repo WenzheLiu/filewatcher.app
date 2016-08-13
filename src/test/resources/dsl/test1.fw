@@ -1,0 +1,23 @@
+
+start recursively watch "E:/wenzhe/folder1" \
+filter include extension (
+  "md", "txt", "doc", "docx", "png", "jpg", "jpeg"
+) filter exclude folder name equalsTo "target", "bin", ".settings" \
+filter exclude file name matches "\\d{4}\\.\\d?\\d\\.\\d?\\d" \
+filter include file name startsWith "wenzhe", "java" \
+filter exclude folder name cases insensitive endsWith "test", "DSL" \
+filter exclude folder path contains "src/test", "src/main/resources" \
+filter exclude when { updatedFile, updatedType ->
+  println "when file $updatedFile"
+  true;
+} \
+on file modified {
+  execute "E:/wenzhe/script/update_blog.bat"
+} \
+on file and folder created {
+  execute { updatedFile, updatedType ->
+    
+    def now = LocalDateTime.now()
+    println "file $updatedFile upload to cloud on $now"
+  }
+}

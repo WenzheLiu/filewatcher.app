@@ -1,0 +1,17 @@
+start recursively watch "E:/wenzhe/aa" \
+filter include extension (
+  "txt"
+) filter exclude file name contains "123" \
+on file modified { updatedFile ->
+  async {
+    println "file $updatedFile modifieddddd"
+  }
+} on file modified { updatedFile ->
+  println "open notepad"
+  //  "notepad '$updatedFile'".execute()
+}
+
+start to watch "E:/wenzhe/bb" \
+on file updated { updatedFile, updatedType ->
+  println "file $updatedFile $updatedType"
+}
